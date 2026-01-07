@@ -831,6 +831,36 @@ public abstract class AbstractFlywayTask extends DefaultTask {
         return conf;
     }
 
+    /**
+     * Known database-specific configuration prefixes.
+     * These use "flyway." prefix, not "flyway.plugins." prefix.
+     */
+    private static final Set<String> DATABASE_PREFIXES = Set.of(
+        "postgresql", "mysql", "oracle", "sqlserver", "mariadb",
+        "cockroachdb", "h2", "hsqldb", "derby", "db2", "informix",
+        "sybase", "firebird", "snowflake", "redshift", "bigquery",
+        "spanner", "saphana", "clickhouse"
+    );
+
+    /**
+     * Determines the correct configuration prefix for a property.
+     * Database-specific configurations use "flyway." prefix.
+     * Actual plugin configurations use "flyway.plugins." prefix.
+     *
+     * @param propertyName The property name in lowercase dot notation
+     * @return The appropriate prefix
+     */
+    private String getConfigPrefix(final String propertyName) {
+        // Check if property starts with any known database prefix
+        for (final String dbPrefix : DATABASE_PREFIXES) {
+            if (propertyName.startsWith(dbPrefix + ".") || propertyName.equals(dbPrefix)) {
+                return "flyway.";
+            }
+        }
+        // Default to plugins prefix for actual Flyway plugins
+        return FLYWAY_PLUGINS_PREFIX;
+    }
+
     public Map<String, String> getPluginConfiguration(final Map<String, String> pluginConfiguration,
         final Map<String, String> extensionPluginConfiguration) {
         final Map<String, String> conf = new HashMap<>();
@@ -842,14 +872,20 @@ public abstract class AbstractFlywayTask extends DefaultTask {
         final String camelCaseRegex = "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])";
         if (extensionPluginConfiguration != null) {
             for (final String key : extensionPluginConfiguration.keySet()) {
-                conf.put(FLYWAY_PLUGINS_PREFIX + String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT),
-                    extensionPluginConfiguration.get(key));
+                final String propertyName = String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT);
+                final String prefix = getConfigPrefix(propertyName);
+
+                // Database extensions (e.g., PostgreSQL) expect properties like "flyway.postgresql.transactional.lock"
+                // Actual plugins expect properties like "flyway.plugins.myplugin.setting"
+                conf.put(prefix + propertyName, extensionPluginConfiguration.get(key));
             }
         }
         if (pluginConfiguration != null) {
             for (final String key : pluginConfiguration.keySet()) {
-                conf.put(FLYWAY_PLUGINS_PREFIX + String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT),
-                    pluginConfiguration.get(key));
+                final String propertyName = String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT);
+                final String prefix = getConfigPrefix(propertyName);
+
+                conf.put(prefix + propertyName, pluginConfiguration.get(key));
             }
         }
 
