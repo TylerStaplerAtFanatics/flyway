@@ -203,7 +203,20 @@ The plugin expects a Maven Central deployment setup:
 - Split workflow into two steps: `mvn install` to build artifacts, then `mvn jreleaser:deploy` to publish
 - Set environment variables: JRELEASER_GITHUB_TOKEN, JRELEASER_GPG_* (empty for no signing)
 - Kept distributionManagement section for compatibility
-**Rationale**: JReleaser is purpose-built for artifact publishing and shouldn't conflict with Maven Central plugins
+**Result**: ❌ Failed - JReleaser requires stagingDirectories configuration and is designed for GitHub Releases, not Maven package repos
+**Why it failed**: JReleaser is primarily for GitHub Releases. GitHub Packages Maven deployment needs standard Maven deploy process
+
+---
+
+### Attempt 22: Use Maven 3.8.8 to Avoid Auto-Injection
+**Approach**: Downgrade from Maven 3.9.11 to Maven 3.8.8 which doesn't have the central-publishing plugin auto-injection feature
+**Key Discovery**: Maven 3.9.x logs show "Installing Central Publishing features" - this is a built-in feature in 3.9.x that auto-injects the plugin
+**Changes Made**:
+- Added step to download and install Maven 3.8.8 from Apache archives
+- Removed cache: 'maven' from setup-java (not needed when installing custom Maven)
+- Added verification step to confirm Maven version
+- Keep using standard `mvn deploy` command
+**Rationale**: Maven 3.8.x doesn't have the auto-injection feature, so it should work like the fanatics-gaming examples
 **Status**: Testing
 
 ---
