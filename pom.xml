@@ -973,6 +973,23 @@
         <artifactId>jreleaser-maven-plugin</artifactId>
       </plugin>
 
+      <!-- Override auto-injected central-publishing plugin -->
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.7.0</version>
+        <configuration>
+          <skip>true</skip>
+          <skipPublishing>true</skipPublishing>
+        </configuration>
+        <executions>
+          <execution>
+            <id>injected-central-publishing</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+
 
 
 
