@@ -925,17 +925,15 @@
         </configuration>
       </plugin>
 
-      <!-- Override auto-injected central-publishing execution -->
+      <!-- Disable central-publishing-maven-plugin for GitHub Packages -->
       <plugin>
         <groupId>org.sonatype.central</groupId>
         <artifactId>central-publishing-maven-plugin</artifactId>
         <version>0.7.0</version>
-        <executions>
-          <execution>
-            <id>injected-central-publishing</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
+        <extensions>true</extensions>
+        <configuration>
+          <skipPublishing>true</skipPublishing>
+        </configuration>
       </plugin>
 
       <plugin>
