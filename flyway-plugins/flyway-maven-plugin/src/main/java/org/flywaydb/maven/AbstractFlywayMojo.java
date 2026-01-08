@@ -873,7 +873,7 @@ abstract class AbstractFlywayMojo extends AbstractMojo {
 
         final String camelCaseRegex = "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])";
         for (final String key : pluginConfiguration.keySet()) {
-            conf.put(FLYWAY_PLUGINS_PREFIX + String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT),
+            conf.put("flyway." + String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT),
                 pluginConfiguration.get(key));
         }
 

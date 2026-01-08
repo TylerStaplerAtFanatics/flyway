@@ -842,13 +842,13 @@ public abstract class AbstractFlywayTask extends DefaultTask {
         final String camelCaseRegex = "(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])";
         if (extensionPluginConfiguration != null) {
             for (final String key : extensionPluginConfiguration.keySet()) {
-                conf.put(FLYWAY_PLUGINS_PREFIX + String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT),
+                conf.put("flyway." + String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT),
                     extensionPluginConfiguration.get(key));
             }
         }
         if (pluginConfiguration != null) {
             for (final String key : pluginConfiguration.keySet()) {
-                conf.put(FLYWAY_PLUGINS_PREFIX + String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT),
+                conf.put("flyway." + String.join(".", key.split(camelCaseRegex)).toLowerCase(Locale.ROOT),
                     pluginConfiguration.get(key));
             }
         }
