@@ -193,6 +193,21 @@ The plugin expects a Maven Central deployment setup:
 </plugin>
 ```
 
+---
+
+### Attempt 21: Switch to JReleaser Maven Plugin
+**Approach**: Replace Maven deploy with JReleaser Maven Plugin (jreleaser:deploy) which is specifically designed for multi-platform publishing
+**Documentation**: https://jreleaser.org/guide/latest/tools/jreleaser-maven.html
+**Changes Made**:
+- Added jreleaser-maven-plugin version 1.15.0 to pom.xml with GitHub Packages configuration
+- Split workflow into two steps: `mvn install` to build artifacts, then `mvn jreleaser:deploy` to publish
+- Set environment variables: JRELEASER_GITHUB_TOKEN, JRELEASER_GPG_* (empty for no signing)
+- Kept distributionManagement section for compatibility
+**Rationale**: JReleaser is purpose-built for artifact publishing and shouldn't conflict with Maven Central plugins
+**Status**: Testing
+
+---
+
 ## Potential Solutions Not Yet Tried
 
 ### Option 1: Find and Remove Parent POM Extension

@@ -935,6 +935,25 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <groupId>org.jreleaser</groupId>
+        <artifactId>jreleaser-maven-plugin</artifactId>
+        <version>1.15.0</version>
+        <configuration>
+          <jreleaser>
+            <deploy>
+              <maven>
+                <github>
+                  <github-packages>
+                    <active>ALWAYS</active>
+                  </github-packages>
+                </github>
+              </maven>
+            </deploy>
+          </jreleaser>
+        </configuration>
+      </plugin>
+
 
 
 

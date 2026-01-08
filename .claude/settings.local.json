@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(../../gradlew test:*)",
+      "Bash(./mvnw:*)",
+      "Bash(mvn clean test:*)",
+      "Bash(mvn test:*)",
+      "Bash(git tag -d v11.20.0-fork.1)",
+      "Bash(git tag -a v11.20.0-fork.1 -m \"Release 11.20.0-fork.1 - Fix configuration prefix bug in Gradle and Maven plugins\")",
+      "Bash(git tag:*)",
+      "WebSearch",
+      "Bash(mvn help:effective-pom:*)"
+    ]
+  }
+}

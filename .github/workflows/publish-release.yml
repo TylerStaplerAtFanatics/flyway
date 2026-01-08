@@ -45,10 +45,16 @@ jobs:
         </settings>
         EOF
 
-    - name: Publish to GitHub Packages
-      run: mvn -B deploy -Dmaven.install.skip=true -DskipTests -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
+    - name: Build artifacts
+      run: mvn -B install -DskipTests -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
+
+    - name: Deploy to GitHub Packages with JReleaser
+      run: mvn -B jreleaser:deploy -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        JRELEASER_GPG_PASSPHRASE: ''
+        JRELEASER_GPG_PUBLIC_KEY: ''
+        JRELEASER_GPG_SECRET_KEY: ''
 
     - name: Create deployment summary
       run: |
