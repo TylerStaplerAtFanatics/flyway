@@ -891,6 +891,8 @@
                   <github>
                     <github-packages>
                       <active>ALWAYS</active>
+                      <url>https://maven.pkg.github.com/TylerStaplerAtFanatics/flyway</url>
+                      <stagingRepositories>target/staging-deploy</stagingRepositories>
                     </github-packages>
                   </github>
                 </maven>

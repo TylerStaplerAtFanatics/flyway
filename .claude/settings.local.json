@@ -9,7 +9,9 @@
       "Bash(git tag -a v11.20.0-fork.1 -m \"Release 11.20.0-fork.1 - Fix configuration prefix bug in Gradle and Maven plugins\")",
       "Bash(git tag:*)",
       "WebSearch",
-      "Bash(mvn help:effective-pom:*)"
+      "Bash(mvn help:effective-pom:*)",
+      "Bash(mvn:*)",
+      "Bash(JRELEASER_GITHUB_TOKEN=fake_token JRELEASER_GPG_PASSPHRASE='' JRELEASER_GPG_PUBLIC_KEY='' JRELEASER_GPG_SECRET_KEY='' mvn:*)"
     ]
   }
 }
