@@ -49,7 +49,7 @@ jobs:
       run: mvn -B install -DskipTests -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
 
     - name: Deploy to GitHub Packages with JReleaser
-      run: mvn -B jreleaser:deploy -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin
+      run: mvn -B org.jreleaser:jreleaser-maven-plugin:1.15.0:deploy -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin
       env:
         JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         JRELEASER_GPG_PASSPHRASE: ''
