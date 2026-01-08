@@ -121,6 +121,9 @@
   </repositories>
 
   <properties>
+    <!-- Disable central-publishing plugin auto-injection -->
+    <skipPublishing>true</skipPublishing>
+
     <version.ant>1.10.13</version.ant>
     <version.antlr>4.13.2</version.antlr>
     <version.appinsights>3.4.7</version.appinsights>

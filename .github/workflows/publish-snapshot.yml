@@ -57,7 +57,7 @@ jobs:
         echo "Building version: $VERSION"
 
     - name: Deploy to GitHub Packages
-      run: mvn -B deploy -Dmaven.ext.class.path= -Dmaven.install.skip=true -DskipTests
+      run: mvn -B deploy -DskipPublishing=true -Dmaven.install.skip=true -DskipTests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
