@@ -52,7 +52,7 @@ jobs:
       run: mvn -B install -DskipTests
 
     - name: Deploy to GitHub Packages with JReleaser
-      run: mvn -B jreleaser:deploy
+      run: mvn -B org.jreleaser:jreleaser-maven-plugin:deploy
       env:
         JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         JRELEASER_GPG_PASSPHRASE: ''
