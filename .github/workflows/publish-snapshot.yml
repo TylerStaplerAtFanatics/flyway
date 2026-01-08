@@ -1,0 +1,76 @@
+name: Publish Snapshot to GitHub Packages
+
+on:
+  push:
+    branches:
+      - main
+      - 'tylerstapler/**'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout Flyway Fork
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: 'temurin'
+        cache: 'maven'
+        server-id: github
+        server-username: GITHUB_ACTOR
+        server-password: GITHUB_TOKEN
+
+    - name: Extract version from pom.xml
+      id: version
+      run: |
+        VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Building version: $VERSION"
+
+    - name: Build with Maven
+      run: mvn -B clean install -DskipTests -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
+
+    - name: Publish to GitHub Packages
+      run: mvn -B deploy -DskipTests -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_ACTOR: ${{ github.actor }}
+
+    - name: Create deployment summary
+      run: |
+        echo "## 📦 Published Flyway Fork Snapshot to GitHub Packages" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Branch**: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "**Commit**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "**Version**: \`${{ steps.version.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Published Modules:" >> $GITHUB_STEP_SUMMARY
+        echo "- org.flywaydb:flyway-core:${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "- org.flywaydb:flyway-database-postgresql:${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "- org.flywaydb:flyway-gradle-plugin:${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "- org.flywaydb:flyway-maven-plugin:${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### To use this snapshot:" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`xml" >> $GITHUB_STEP_SUMMARY
+        echo "<repositories>" >> $GITHUB_STEP_SUMMARY
+        echo "  <repository>" >> $GITHUB_STEP_SUMMARY
+        echo "    <id>github</id>" >> $GITHUB_STEP_SUMMARY
+        echo "    <url>https://maven.pkg.github.com/${{ github.repository }}</url>" >> $GITHUB_STEP_SUMMARY
+        echo "  </repository>" >> $GITHUB_STEP_SUMMARY
+        echo "</repositories>" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "<dependency>" >> $GITHUB_STEP_SUMMARY
+        echo "  <groupId>org.flywaydb</groupId>" >> $GITHUB_STEP_SUMMARY
+        echo "  <artifactId>flyway-core</artifactId>" >> $GITHUB_STEP_SUMMARY
+        echo "  <version>${{ steps.version.outputs.version }}</version>" >> $GITHUB_STEP_SUMMARY
+        echo "</dependency>" >> $GITHUB_STEP_SUMMARY
+        echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
