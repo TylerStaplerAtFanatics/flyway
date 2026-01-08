@@ -877,12 +877,12 @@
           <configuration>
             <jreleaser>
               <project>
-                <copyright>2010-2026 Red Gate Software Ltd. Modifications Copyright 2026 Fanatics</copyright>
+                <copyright>2010-2026 Red Gate Software Ltd. Modifications Copyright 2026 Fanatics Betting and Gaming</copyright>
                 <description>Flyway: Database Migrations Made Easy.</description>
                 <inceptionYear>2010</inceptionYear>
                 <authors>
                   <author>Redgate Software</author>
-                  <author>Fanatics</author>
+                  <author>Fanatics Betting and Gaming</author>
                 </authors>
                 <license>Apache-2.0</license>
               </project>
@@ -963,7 +963,10 @@
         </configuration>
       </plugin>
 
-
+      <plugin>
+        <groupId>org.jreleaser</groupId>
+        <artifactId>jreleaser-maven-plugin</artifactId>
+      </plugin>
 
 
 
