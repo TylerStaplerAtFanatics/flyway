@@ -870,6 +870,33 @@
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>1.12</version>
         </plugin>
+        <plugin>
+          <groupId>org.jreleaser</groupId>
+          <artifactId>jreleaser-maven-plugin</artifactId>
+          <version>1.15.0</version>
+          <configuration>
+            <jreleaser>
+              <project>
+                <copyright>2010-2026 Red Gate Software Ltd</copyright>
+                <description>Flyway: Database Migrations Made Easy.</description>
+                <inceptionYear>2010</inceptionYear>
+                <authors>
+                  <author>Redgate Software</author>
+                </authors>
+                <license>Apache-2.0</license>
+              </project>
+              <deploy>
+                <maven>
+                  <github>
+                    <github-packages>
+                      <active>ALWAYS</active>
+                    </github-packages>
+                  </github>
+                </maven>
+              </deploy>
+            </jreleaser>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -932,26 +959,6 @@
           <gpgArguments>
             <arg>--pinentry-mode=loopback</arg>
           </gpgArguments>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jreleaser</groupId>
-        <artifactId>jreleaser-maven-plugin</artifactId>
-        <version>1.15.0</version>
-        <inherited>false</inherited>
-        <configuration>
-          <jreleaser>
-            <deploy>
-              <maven>
-                <github>
-                  <github-packages>
-                    <active>ALWAYS</active>
-                  </github-packages>
-                </github>
-              </maven>
-            </deploy>
-          </jreleaser>
         </configuration>
       </plugin>
 
