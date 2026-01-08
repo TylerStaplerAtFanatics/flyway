@@ -32,10 +32,16 @@ Where `FLYWAY_PLUGINS_PREFIX = "flyway.plugins."` (from ConfigUtils.java:153)
 3. Incorrect transformation of nested camelCase keys
 4. Mismatch with how configuration is expected to be consumed
 
+## User Goal (Critical Context)
+**The end goal is to apply Flyway migrations where we disable transactions for a single migration so that we can run PostgreSQL migrations which contain "CONCURRENTLY".**
+
+This means the plugin configuration needs to properly pass through settings that control transaction behavior for specific migrations. The bug in configuration prefix handling is likely preventing this from working correctly.
+
 ## Research Goals
-1. Understand the expected configuration key format
+1. Understand the expected configuration key format for plugin settings
 2. Identify how plugin configuration keys should be transformed
-3. Document actual vs expected behavior with examples
-4. Find existing tests or bug reports
+3. Document actual vs expected behavior with examples, especially for transaction-related settings
+4. Find existing tests or bug reports related to plugin configuration
 5. Check if Maven plugin has the same issue
-6. Determine the correct fix
+6. Verify how transaction settings flow from plugin config to core
+7. Determine the correct fix that enables transaction control per migration
