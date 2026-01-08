@@ -877,11 +877,12 @@
           <configuration>
             <jreleaser>
               <project>
-                <copyright>2010-2026 Red Gate Software Ltd</copyright>
+                <copyright>2010-2026 Red Gate Software Ltd. Modifications Copyright 2026 Fanatics</copyright>
                 <description>Flyway: Database Migrations Made Easy.</description>
                 <inceptionYear>2010</inceptionYear>
                 <authors>
                   <author>Redgate Software</author>
+                  <author>Fanatics</author>
                 </authors>
                 <license>Apache-2.0</license>
               </project>
