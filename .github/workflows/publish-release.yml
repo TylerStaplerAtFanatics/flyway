@@ -34,10 +34,10 @@ jobs:
         server-password: GITHUB_TOKEN
 
     - name: Build with Maven
-      run: mvn -B clean install -DskipTests -Dcentral.publishing.skip=true -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
+      run: mvn -B clean install -DskipTests -DskipCentralPublishing=true -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
 
     - name: Publish to GitHub Packages
-      run: mvn -B deploy -DskipTests -Dcentral.publishing.skip=true -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin
+      run: mvn -B deploy -DskipTests -DskipCentralPublishing=true -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_ACTOR: ${{ github.actor }}

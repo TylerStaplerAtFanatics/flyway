@@ -931,6 +931,7 @@
         <extensions>true</extensions>
         <configuration>
           <publishingServerId>central</publishingServerId>
+          <skip>${skipCentralPublishing}</skip>
         </configuration>
       </plugin>
 
