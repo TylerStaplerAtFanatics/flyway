@@ -48,8 +48,19 @@ jobs:
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "Building version: $VERSION"
 
+    - name: Debug - Check effective POM for central-publishing plugin
+      run: |
+        echo "=== Checking for central-publishing-maven-plugin in effective POM ==="
+        mvn help:effective-pom -pl flyway-core | grep -A 15 "central-publishing" || echo "Plugin not found in effective POM"
+        echo ""
+        echo "=== Checking Maven version ==="
+        mvn --version
+        echo ""
+        echo "=== Checking for plugin in build extensions ==="
+        find . -name "pom.xml" -exec grep -H "central-publishing" {} \; || echo "No references found in any POM files"
+
     - name: Publish to GitHub Packages
-      run: mvn -B deploy -Dmaven.install.skip=true -DskipTests -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
+      run: mvn -B deploy -Dmaven.install.skip=true -Dmaven.ext.class.path= -DskipTests -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

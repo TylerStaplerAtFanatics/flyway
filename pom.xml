@@ -935,18 +935,6 @@
         </configuration>
       </plugin>
 
-      <!-- Explicitly configure central-publishing-maven-plugin to skip -->
-      <plugin>
-        <groupId>org.sonatype.central</groupId>
-        <artifactId>central-publishing-maven-plugin</artifactId>
-        <version>0.9.0</version>
-        <extensions>true</extensions>
-        <configuration>
-          <skip>true</skip>
-          <skipPublishing>true</skipPublishing>
-          <publishingServerId>central</publishingServerId>
-        </configuration>
-      </plugin>
 
 
 
