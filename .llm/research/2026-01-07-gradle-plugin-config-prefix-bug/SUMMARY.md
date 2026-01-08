@@ -172,15 +172,31 @@ This bug affects ALL ConfigurationExtension-based configurations, not just Postg
 - Any database-specific configuration extensions
 - Any custom ConfigurationExtension implementations
 
+## Research Phase Complete ✅
+
+All research tasks completed:
+- ✅ Configuration prefix bug (Bug #1) fully documented
+- ✅ Advisory lock design (Bug #2) fully analyzed
+- ✅ Implementation plan created with phased approach
+- ✅ All files identified for modification
+- ✅ Test strategy defined
+
 ## Next Steps
 
-1. ✅ **Research Complete** - Bug fully documented with fix
-2. ⏭️ **Implement Fix** - Update both AbstractFlywayTask.java and AbstractFlywayMojo.java
-3. ⏭️ **Add Tests** - Create comprehensive test coverage
-4. ⏭️ **Test Locally** - Verify fix resolves deadlock issue
-5. ⏭️ **Additional Fixes** - Implement session-scoped advisory locks (Bug #2)
-6. ⏭️ **Publish Fork** - Make fork available for application use
-7. ⏭️ **Upstream PR** - Submit pull request to Flyway maintainers
+### Ready to Implement
+
+1. ⏭️ **Phase 1: Critical Fix** (2-3 hours) - Fix configuration prefix bug
+2. ⏭️ **Phase 2: Verification** (1 hour) - Test session locks work
+3. ⏭️ **Phase 3: Enhancements** (4-6 hours, optional) - Add heartbeat, cleanup, TimeProvider
+4. ⏭️ **Phase 4: Testing & Docs** (2-3 hours) - Comprehensive test coverage
+
+### Implementation Files Ready
+
+- `AbstractFlywayTask.java` - Lines 845, 851 identified
+- `AbstractFlywayMojo.java` - Line 876 identified
+- `PostgreSQLAdvisoryLockTemplate.java` - Enhancement locations identified
+
+See `IMPLEMENTATION-PLAN.md` for detailed implementation guide.
 
 ## Files to Modify
 
