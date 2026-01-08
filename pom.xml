@@ -924,6 +924,8 @@
           <retryFailedDeploymentCount>3</retryFailedDeploymentCount>
         </configuration>
       </plugin>
+      <!-- Disabled for GitHub Packages deployment -->
+      <!--
       <plugin>
         <groupId>org.sonatype.central</groupId>
         <artifactId>central-publishing-maven-plugin</artifactId>
@@ -931,9 +933,9 @@
         <extensions>true</extensions>
         <configuration>
           <publishingServerId>central</publishingServerId>
-          <skip>${skipCentralPublishing}</skip>
         </configuration>
       </plugin>
+      -->
 
       <plugin>
         <artifactId>maven-gpg-plugin</artifactId>
