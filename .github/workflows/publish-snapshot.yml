@@ -36,11 +36,8 @@ jobs:
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "Building version: $VERSION"
 
-    - name: Build with Maven
-      run: mvn -B clean package -DskipTests -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
-
     - name: Publish to GitHub Packages
-      run: mvn -B deploy:deploy -DskipTests -Dmaven.install.skip=true -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin
+      run: mvn -B clean deploy -DskipTests -Dmaven.install.skip=true -DskipCentralPublishing=true -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} -pl flyway-core,flyway-database/flyway-database-postgresql,flyway-plugins/flyway-gradle-plugin,flyway-plugins/flyway-maven-plugin -am
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_ACTOR: ${{ github.actor }}

@@ -20,7 +20,7 @@
     <module>flyway-database-informix</module>
     <module>flyway-database-postgresql</module>
     <module>flyway-database-oracle</module>
-    <module>flyway-database-mongodb</module>
+    <!-- Removed: flyway-database-mongodb - requires auth to flyway-community-db-support -->
     <module>flyway-database-redshift</module>
     <module>flyway-database-saphana</module>
     <module>flyway-database-snowflake</module>
@@ -32,8 +32,8 @@
     <module>flyway-singlestore</module>
     <module>flyway-sqlserver</module>
     <module>flyway-database-cassandra</module>
-    <module>flyway-database-nc-mongodb</module>
-    <module>flyway-database-nc-couchbase</module>
+    <!-- Removed: flyway-database-nc-mongodb - requires auth to flyway-community-db-support -->
+    <!-- Removed: flyway-database-nc-couchbase - may have similar issues -->
 
 
 
