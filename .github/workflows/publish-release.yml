@@ -28,30 +28,8 @@ jobs:
       with:
         java-version: 17
         distribution: 'temurin'
-
-    - name: Install Maven 3.8.8
-      run: |
-        wget -q https://archive.apache.org/dist/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
-        tar xzf apache-maven-3.8.8-bin.tar.gz
-        echo "$PWD/apache-maven-3.8.8/bin" >> $GITHUB_PATH
-
-    - name: Verify Maven version
-      run: mvn --version
-
-    - name: Configure Maven settings for GitHub Packages
-      run: |
-        mkdir -p ~/.m2
-        cat > ~/.m2/settings.xml << 'EOF'
-        <settings>
-          <servers>
-            <server>
-              <id>github</id>
-              <username>${env.GITHUB_ACTOR}</username>
-              <password>${env.GITHUB_TOKEN}</password>
-            </server>
-          </servers>
-        </settings>
-        EOF
+        cache: 'maven'
+        server-id: github
 
     - name: Deploy to GitHub Packages
       run: mvn -B deploy -DskipPublishing=true -Dmaven.install.skip=true -DskipTests
