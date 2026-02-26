@@ -918,22 +918,6 @@
     </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.central</groupId>
-        <artifactId>central-publishing-maven-plugin</artifactId>
-        <version>0.7.0</version>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <id>injected-central-publishing</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <skip>true</skip>
-          <skipPublishing>true</skipPublishing>
-        </configuration>
-      </plugin>
-      <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <release>17</release>
