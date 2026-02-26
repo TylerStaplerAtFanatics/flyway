@@ -43,8 +43,14 @@ jobs:
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "Building version: $VERSION"
 
+    - name: Build packages
+      run: mvn -B clean package -DskipTests
+
     - name: Deploy to GitHub Packages
-      run: mvn -B deploy -Dmaven.install.skip=true -DskipTests
+      run: |
+        mvn -B org.apache.maven.plugins:maven-deploy-plugin:2.8.2:deploy \
+          -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }} \
+          -DskipTests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
